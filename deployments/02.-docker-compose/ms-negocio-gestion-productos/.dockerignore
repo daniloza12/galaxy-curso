@@ -1,0 +1,7 @@
+# Ignore all files in the root directory
+*
+#src
+# exclude build binaries
+#build/*
+# except files for docker
+!build/libs

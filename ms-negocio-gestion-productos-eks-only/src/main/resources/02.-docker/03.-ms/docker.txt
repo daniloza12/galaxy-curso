@@ -1,0 +1,48 @@
+gradle bootRun
+
+gradle bootRun --args='--server.port=8083'
+
+rmdir build /s
+
+gradle build -x test
+
+
+java -jar ms-negocio-gestion-productos-eks-only-0.0.1-SNAPSHOT.jar
+
+docker build -t ms-negocio-gestion-productos . 
+
+docker rmi [Image Id] emj. 700aea88d128
+
+
+# Eliminacion de contenedor
+docker rm  ID Container
+
+
+# Inspeccion de Contenedor
+
+docker inspect ID container
+
+# Logs de Contenedor
+
+docker logs ID container
+
+# Local
+
+
+docker run --name mysql-dev-ms  -p3307:3306 -e MYSQL_ROOT_PASSWORD=123456 -d --network ms-pedidos-v1 mysql:latest
+
+
+docker run --name ms-negocio-gestion-productos-v1 -e MYSQL_HOST=mysql-dev-ms -p8082:8082 --network ms-pedidos-v1 -d   ms-negocio-gestion-productos:latest
+
+docker run --name ms-negocio-gestion-productos-v3 -p8083:8082 --network ms-pedidos-v1 -d ms-negocio-gestion-productos:latest
+
+
+docker network connect ms-pedidos-network ms-negocio-gestion-productos-v2
+
+#Cloud
+
+docker tag ms-negocio-gestion-productos 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-negocio-gestion-productos:0.0.1
+
+aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 179286536309.dkr.ecr.sa-east-1.amazonaws.com
+
+docker push 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-negocio-gestion-productos:0.0.1

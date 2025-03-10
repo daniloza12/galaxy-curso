@@ -1,0 +1,21 @@
+# Crear una red
+
+docker network create ms-pedidos-v1
+
+# Listado de redes
+
+docker network ls
+
+# Inspeccionar una red
+
+docker network inspect ms-pedidos-v1
+
+# Eliminar redes
+
+docker network rm ms-pedidos-v1
+
+# Conectando servicios
+
+#docker network connect ms-pedidos-network ms-negocio-gestion-clientes
+
+#docker network connect ms-pedidos-network mysql-dev-ms

@@ -1,0 +1,19 @@
+kubectl apply -f  ms-negocio-gestion-productos-deployment.yaml
+
+kubectl apply -f  ms-negocio-gestion-productos-service.yaml
+
+kubectl delete deployment.apps/ms-negocio-gestion-productos-deployment service/ms-negocio-gestion-productos-service
+
+kubectl get secrets,deployment,services,pods
+
+http://a89983687da9544d5a9cdc3be1a88f96-734152871.sa-east-1.elb.amazonaws.com:8890/applications
+
+# Restart
+kubectl rollout restart deployment ms-negocio-gestion-productos-deployment
+
+# Scale
+kubectl scale deployment ms-negocio-gestion-productos-deployment --replicas=1
+
+http://a96649b1760d6438081cd7e032a1ae60-356418683.sa-east-1.elb.amazonaws.com:8082/v1/productos
+
+

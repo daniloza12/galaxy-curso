@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:                     
+  name: ms-administracion-server-config-service
+  labels:                   
+    app: ms-administracion-server-config
+spec:                         
+  type: LoadBalancer 
+  selector:
+    app: ms-administracion-server-config
+  ports:
+  - name: http
+    port: 8888
+    targetPort: 8888

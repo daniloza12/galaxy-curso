@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-demo-v2-deployment
+  labels:
+    app: ms-demo-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-demo-v2
+  template:
+    metadata:
+      labels:
+        app: ms-demo-v2
+    spec:
+      containers:
+      - name: ms-demo-v2
+        image: 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-demo-v2:0.0.1
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            containerPort: 8084
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 100m

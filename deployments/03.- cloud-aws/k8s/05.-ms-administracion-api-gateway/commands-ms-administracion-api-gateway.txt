@@ -1,0 +1,7 @@
+kubectl create -f ms-administracion-api-gateway-deployment.yaml
+
+kubectl create -f ms-administracion-api-gateway-service.yaml
+
+kubectl delete deployment.apps/ms-administracion-api-gateway-deployment service/ms-administracion-api-gateway-service
+
+kubectl get secrets,deployment,services,pods

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-negocio-gestion-productos-deployment
+  labels:                     
+    app: ms-negocio-gestion-productos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-negocio-gestion-productos
+  template:
+    metadata:
+      labels:
+        app: ms-negocio-gestion-productos
+    spec:
+      containers:
+      - name: ms-gestion-alumno
+        image: 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ecr-ms-negocio-gestion-productos-v1:0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: http
+            containerPort: 8082
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 100m
+        env:
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-credentials
+              key: username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-credentials
+              key: password
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db-url
+              key: url

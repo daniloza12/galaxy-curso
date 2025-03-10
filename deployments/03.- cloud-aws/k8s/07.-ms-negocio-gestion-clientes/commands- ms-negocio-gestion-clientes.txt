@@ -1,0 +1,17 @@
+kubectl apply -f  ms-negocio-gestion-clientes-deployment.yaml
+
+kubectl apply -f  ms-negocio-gestion-clientes-service.yaml
+
+kubectl delete deployment.apps/ms-negocio-gestion-clientes-deployment service/ms-negocio-gestion-clientes-service
+
+kubectl get secrets,deployment,services,pods
+
+kubectl logs pod/ms-negocio-gestion-clientes-deployment-55d7494bfc-njm7w
+
+http://a28076f178d37429db04193f3785a3dd-940277697.sa-east-1.elb.amazonaws.com:8081/api/v1/productos
+
+# Restart
+kubectl rollout restart deployment ms-negocio-gestion-clientes-deployment
+
+# Scale
+kubectl scale deployment ms-negocio-gestion-clientes-deployment --replicas=1

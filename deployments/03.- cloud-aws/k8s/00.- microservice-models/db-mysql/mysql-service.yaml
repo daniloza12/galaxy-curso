@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-mysql-v2-service
+  labels:
+    name: db-v2-mysql
+    app: ms-demo-v2-app
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    name: db-mysql-v2-pod
+    app: ms-demo-v2-app
+
+  type: NodePort

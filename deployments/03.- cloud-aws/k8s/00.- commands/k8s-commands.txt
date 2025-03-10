@@ -1,0 +1,65 @@
+# Conectarse al cluster de AWS-EKS
+
+aws eks update-kubeconfig --name aws-eks-gestion-demos-v1
+
+kubectl create –f ms-administracion-server-admin-deployment.yaml
+
+kubectl create –f ms-administracion-server-admin-service.yaml
+
+
+
+kubectl get secrets,deployment,services,pods
+
+http://a6df715f2ea824b7f9a59e0dcd186dde-1646905042.sa-east-1.elb.amazonaws.com:8890/applications
+
+
+#Secrets
+
+kubectl create -f github-user-credentials-secret.yaml
+
+kubectl delete deployment/ms-administracion-server-config-deployment
+
+kubectl delete service/ms-administracion-server-config-service
+
+
+kubectl create –f ms-administracion-server-config-deployment.yaml
+
+kubectl create –f ms-administracion-server-config-service.yaml
+
+
+http://a2b3b656269324dda8ee0dd2645a41b1-1592896564.sa-east-1.elb.amazonaws.com:8888/actuator
+
+
+kubectl create -f github-user-credentials-secret.yaml
+
+kubectl create -f mysql-root-secret.yaml
+
+kubectl create -f mysql-dbs-urls-secret.yaml
+
+kubectl create -f mysql-deployment.yaml
+
+kubectl create -f mysql-service.yaml
+
+kubectl create -f mysql-ms-server-config-urls-secret.yaml
+
+
+kubectl describe pod/db-mysql-deployment-6b87ccbd8b-f45tc
+
+
+kubectl create –f ms-negocio-gestion-productos-deployment.yaml
+
+kubectl create –f ms-negocio-gestion-productos-service.yaml
+
+kubectl describe ms-negocio-gestion-productos-deployment-594bf7fb5b-8jdxw
+
+
+kubectl delete deployment.apps/ms-negocio-gestion-productos-deployment
+kubectl delete service/ms-negocio-gestion-productos-service
+
+kubectl exec -it db-mysql-deployment-6b87ccbd8b-f45tc -- sh
+
+
+kubectl create –f ms-negocio-gestion-productos-deployment.yaml
+
+kubectl create –f ms-negocio-gestion-productos-service.yaml
+

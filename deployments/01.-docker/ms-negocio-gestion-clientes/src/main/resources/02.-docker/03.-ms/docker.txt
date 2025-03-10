@@ -1,0 +1,46 @@
+gradle bootRun
+
+gradle bootRun --args='--server.port=8083'
+
+rmdir build /s
+
+gradle build -x test
+
+
+java -jar ms-negocio-gestion-clientes-0.0.1-SNAPSHOT.jar
+
+docker build -t ms-negocio-gestion-clientes . 
+
+docker rmi [Image Id] emj. 700aea88d128
+
+
+# Eliminacion de contenedor
+docker rm  ID Container
+
+
+# Inspeccion de Contenedor
+
+docker inspect ID container
+
+# Logs de Contenedor
+
+docker logs ID container
+
+# Forma 01
+
+docker run --name ms-negocio-gestion-clientes-v1 -p8083:8083 --network ms-pedidos-v1 -d ms-negocio-gestion-clientes:latest
+
+
+# Forma 02
+
+docker run --name ms-negocio-gestion-clientes-v2 -e MYSQL_HOST=mysql-dev-ms -p8084:8083 --network ms-pedidos-v1 -d   ms-negocio-gestion-clientes:latest
+
+
+# Forma 03 - Pase de servicio como parametro y conexion a red
+
+docker run --name ms-negocio-gestion-clientes-v3 -e MYSQL_HOST=mysql-dev-ms -p8085:8083 -d   ms-negocio-gestion-clientes:latest
+
+docker network connect ms-pedidos-v1 ms-negocio-gestion-clientes-v3
+
+
+aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 179286536309.dkr.ecr.sa-east-1.amazonaws.com

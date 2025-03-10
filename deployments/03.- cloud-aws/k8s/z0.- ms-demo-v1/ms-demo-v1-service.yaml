@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-demo-v1-service
+  labels:
+    app: ms-demo-v1
+spec:
+  type: LoadBalancer
+  selector:
+    app: ms-demo-v1
+  ports:
+  - name: http
+    port: 8082
+    targetPort: 8082

@@ -1,0 +1,55 @@
+name: ms-gestion-pedidos-v1
+services:
+  mysql-dev-ms:
+    container_name: mysql-dev-ms
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_DATABASE: db_ms_clientes
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_PASSWORD: 123456
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p123456"]
+      timeout: 20s
+      retries: 10
+
+  ms-negocio-gestion-clientes:
+    container_name: ms-negocio-gestion-clientes
+    image: ms-negocio-gestion-clientes
+    restart: on-failure
+    build:
+      dockerfile: Dockerfile
+      context: ../ms-negocio-gestion-clientes
+    ports:
+      - "8083:8083"
+    environment:
+      MYSQL_HOST: mysql-dev-ms
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+      MYSQL_PORT: 3306
+    depends_on:
+      mysql-dev-ms:
+        condition: service_healthy
+#        condition: service_completed_successfully
+
+  ms-negocio-gestion-productos:
+    container_name: ms-negocio-gestion-productos
+    image: ms-negocio-gestion-productos
+    restart: on-failure
+    build:
+      dockerfile: Dockerfile
+      context: ../ms-negocio-gestion-productos
+    ports:
+      - "8084:8084"
+    environment:
+      MYSQL_HOST: mysql-dev-ms
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+      MYSQL_PORT: 3306
+    depends_on:
+      mysql-dev-ms:
+        condition: service_healthy
+#       condition: service_completed_successfully

@@ -1,0 +1,9 @@
+kubectl apply -f ms-administracion-server-config-deployment.yaml
+
+kubectl apply -f ms-administracion-server-config-service.yaml
+
+kubectl delete deployment.apps/ms-administracion-server-config-deployment service/ms-administracion-server-config-service
+
+kubectl get secrets,deployment,services,pods
+
+http://a75f7a9948fa5499cbe65508147bb71e-188641176.sa-east-1.elb.amazonaws.com:8888/actuator

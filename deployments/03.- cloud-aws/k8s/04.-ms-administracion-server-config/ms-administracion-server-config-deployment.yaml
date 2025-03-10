@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-administracion-server-config-deployment
+  labels:          
+    app: ms-administracion-server-config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-administracion-server-config
+  template:
+    metadata:
+      labels:
+        app: ms-administracion-server-config
+    spec:
+      containers:
+      - name: ms-administracion-server-config
+        image: 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-administracion-server-config:0.0.1
+ #       imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            containerPort: 8888
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 100m
+        env:
+        - name: USER_NAME
+          valueFrom:
+            secretKeyRef:
+              name: github-user-credentials-secret
+              key: userName
+        - name: USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: github-user-credentials-secret
+              key: userPassword
+        - name: GIT_BRANCH
+          value: 10.-Sesion10
+#        - name: CLOUD_CONFIG_SERVER_GIT_DEFAULT_LABEL
+#          value: 09.-Sesion09

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-administracion-api-gateway-deployment
+  labels:          
+    app: ms-administracion-api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-administracion-api-gateway
+  template:
+    metadata:
+      labels:
+        app: ms-administracion-api-gateway
+    spec:
+      containers:
+      - name: ms-administracion-api-gateway
+        image: 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-administracion-api-gateway:0.0.2
+ #       imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        ports:
+          - name: http
+            containerPort: 8887
+        resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
+          requests:
+            cpu: 100m
+        env:
+        - name: MS_SERVER_CONFIG
+          valueFrom: 
+            secretKeyRef:
+              name: mysql-ms-server-config-urls-secret
+              key: ms_server-config_url

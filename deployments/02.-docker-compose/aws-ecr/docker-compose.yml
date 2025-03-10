@@ -1,0 +1,24 @@
+name: ms-demo-stack
+services:
+
+  ms-demo-dev1:
+    container_name: ms-demo-dev1
+    image: 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-demo:0.0.2
+    restart: on-failure
+#    build: .
+    ports:
+      - "8082:8082"
+  ms-demo-dev2:
+    container_name: ms-demo-dev2
+    image: 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-demo:0.0.2
+    restart: on-failure
+#    build: .
+    ports:
+      - "8083:8082"      
+  ms-demo-dev3:
+    container_name: ms-demo-dev3
+    image: 179286536309.dkr.ecr.sa-east-1.amazonaws.com/ms-demo:0.0.2
+    restart: on-failure
+#    build: .
+    ports:
+      - "8084:8082" 

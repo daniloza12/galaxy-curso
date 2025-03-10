@@ -1,0 +1,109 @@
+
+1.- Autenticarse a AWS ECR
+
+aws eks update-kubeconfig --name aws-eks-gestion-pedidos-v1
+
+aws ecr get-login-password --region sa-east-1 | docker login --username AWS --password-stdin 179286536309.dkr.ecr.sa-east-1.amazonaws.com
+
+-- get objects
+
+kubectl get secrets,deployment,services,pods
+
+-- Secrets
+
+kubectl apply -f 01.-secrets/github-user-credentials-secret.yaml
+
+kubectl apply -f 01.-secrets/mysql-dbs-urls-secret.yaml
+
+kubectl apply -f 01.-secrets/mysql-ms-server-config-urls-secret.yaml
+
+kubectl apply -f 01.-secrets/mysql-user-secret.yaml
+
+-- databases
+
+kubectl apply -f 02.-ms-databases-services/db-mysql/mysql-deployment.yaml
+
+kubectl apply -f 02.-ms-databases-services/db-mysql/mysql-service.yaml
+
+
+kubectl exec -it pod/db-mysql-deployment-5689cfcc65-w52v2 -- sh
+
+mysql -uroot -p123456
+
+create database db_ms_productos;
+
+use db_ms_productos;
+
+CREATE TABLE tbl_producto(
+    producto_id int not null auto_increment PRIMARY KEY ,
+    nombre varchar(60) not null,
+    precio float NULL,
+    stock int not null,
+    estado char(1) DEFAULT '1'
+);
+
+INSERT INTO tbl_producto (nombre,precio,stock,estado) VALUES ('LAPTOP  ASUS VivoBook Pro',3500,4,'1');
+INSERT INTO tbl_producto (nombre,precio,stock,estado) VALUES ('ALCOHOL ISOPROPILICO 70',7.00,15,'1');
+INSERT INTO tbl_producto (nombre,precio,stock,estado) VALUES ('LAPTOP  ASUS VivoBook Pro',4500,15,'1');
+INSERT INTO tbl_producto (nombre,precio,stock,estado) VALUES ('ALCOHOL ISOPROPILICO 90',7.00,12,'1');
+INSERT INTO tbl_producto (nombre,precio,stock,estado) VALUES ('CARGADOR LENOVO ORIGINAL Modelo 2471',8.00,10,'1');
+INSERT INTO tbl_producto (nombre,precio,stock,estado) VALUES ('LAPTOP  ASUS VivoBook Plus',3800,10,'1');
+
+select * from tbl_producto;
+
+
+-- ms- administracion
+-- server-admin
+
+kubectl apply -f 03.-ms-administracion-server-admin/ms-administracion-server-admin-deployment.yaml
+
+kubectl apply -f 03.-ms-administracion-server-admin/ms-administracion-server-admin-service.yaml
+
+-- server-config
+
+kubectl apply -f 04.-ms-administracion-server-config/ms-administracion-server-config-deployment.yaml
+
+kubectl apply -f 04.-ms-administracion-server-config/ms-administracion-server-config-service.yaml
+
+
+-- api-gateway
+
+kubectl apply -f 05.-ms-administracion-api-gateway/ms-administracion-api-gateway-deployment.yaml
+
+kubectl apply -f 05.-ms-administracion-api-gateway/ms-administracion-api-gateway-service.yaml
+
+-- ms-productos
+
+kubectl apply -f  06.-ms-negocio-gestion-productos/ms-negocio-gestion-productos-deployment.yaml
+
+kubectl apply -f  06.-ms-negocio-gestion-productos/ms-negocio-gestion-productos-service.yaml
+
+
+create database db_ms_clientes;
+
+use db_ms_clientes;
+
+
+create table tbl_cliente(
+    cliente_id int not null auto_increment  primary key,
+    razon_social varchar(260) not null unique,
+    ruc char(11) not null unique,
+    direccion varchar(400) not null,
+    telefono varchar(20) null,
+    correo varchar(60) null,
+    estado char(1) default '1' not null 
+);
+
+
+INSERT INTO tbl_cliente(razon_social,ruc,direccion,telefono,correo)
+VALUES('CLARO EMPRESAS','20544987258','AV. LARCO 237-SAN ISIDRO','456-4574','contacto@claro.com.pe');
+
+select * from tbl_cliente;
+
+
+-- Clientes
+kubectl create -f  07.-ms-negocio-gestion-clientes/ms-negocio-gestion-clientes-deployment.yaml
+
+kubectl create -f  07.-ms-negocio-gestion-clientes/ms-negocio-gestion-clientes-service.yaml
+
+

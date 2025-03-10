@@ -1,0 +1,4 @@
+FROM openjdk
+VOLUME /tmp
+COPY build/libs/ms-negocio-gestion-productos*.jar ms-negocio-gestion-productos.jar
+ENTRYPOINT ["java","-jar","/ms-negocio-gestion-productos.jar"]

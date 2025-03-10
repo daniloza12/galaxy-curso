@@ -1,0 +1,10 @@
+kubectl create -f ms-demo-v1-deployment.yaml
+
+kubectl create -f ms-demo-v1-service.yaml
+
+
+kubectl delete service ms-demo-v1-service
+
+kubectl delete deployment ms-demo-v1-deployment
+
+kubectl delete deployment.apps/ms-demo-v1-deployment service/ms-demo-v1-service

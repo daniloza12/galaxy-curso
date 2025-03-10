@@ -1,0 +1,12 @@
+kubectl create -f ms-administracion-server-admin-deployment.yaml
+
+kubectl create -f ms-administracion-server-admin-service.yaml
+
+kubectl create -f ms-administracion-server-admin-all-one.yaml
+
+
+kubectl delete deployment.apps/ms-administracion-server-admin-deployment service/ms-administracion-server-admin-service
+
+kubectl get secrets,deployment,services,pods
+
+http://a93c5b1bff31a4ef5becdc9498dd06fe-474081894.sa-east-1.elb.amazonaws.com:8890/applications

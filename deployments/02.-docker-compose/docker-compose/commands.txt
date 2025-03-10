@@ -1,0 +1,12 @@
+docker compose up -d
+
+
+docker exec -it mysql-dev-ms bash
+
+mysql -uroot -p123456
+
+ show databases;
+ 
+ use db_ms_clientes;
+ 
+ show tables;

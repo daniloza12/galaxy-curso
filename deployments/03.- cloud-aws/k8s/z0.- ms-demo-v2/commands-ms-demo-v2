@@ -1,0 +1,13 @@
+kubectl create -f ms-demo-v2-deployment.yaml
+
+kubectl create -f ms-demo-v2-service.yaml
+
+
+kubectl delete service ms-demo-v2-service
+
+kubectl delete deployment ms-demo-v2-deployment
+
+kubectl delete deployment.apps/ms-demo-v2-deployment service/ms-demo-v2-service
+
+# Verificar yml
+https://www.yamllint.com/
